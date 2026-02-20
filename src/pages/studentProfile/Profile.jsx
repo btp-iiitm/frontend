@@ -63,7 +63,7 @@ function Profile() {
         {value === "exams" && <ExamTab />}
         {value === "assignment" && <AssignmentTab />}
         {value === "subjects" && <SubjectTab />}
-        {/* {value === "analytics" && <AnalyticTab />} */}
+        {value === "analytics" && <AnalyticTab />}
       </div>
     </div>
   );
