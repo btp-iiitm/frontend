@@ -164,67 +164,56 @@ function AnalyticTab() {
             className={`flex flex-col gap-[2rem] w-full rounded-[1rem] py-4 px-8`}
             style={{ border: `2.4px solid ${getColor(analyticsData.grade)}` }}
           >
-            <ul className="flex flex-col gap-[1rem]">
-              <li>
-                <div className="flex gap-[1rem]">
-                  &#8226;{" "}
-                  <span
-                    className="font-semibold text-[1.2rem] min-w-[10rem]"
-                    style={{ color: getColor(analyticsData.grade) }}
-                  >
-                    Grade Overview :
-                  </span>
-                  <span>{aigenerativeData.message}</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex gap-[1rem]">
-                  &#8226;{" "}
-                  <span
-                    className="font-semibold text-[1.2rem] min-w-[10rem]"
-                    style={{ color: getColor2(analyticsData.assignment) }}
-                  >
-                    Assignment :
-                  </span>
-                  <span>{aigenerativeData.assignments}</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex gap-[1rem]">
-                  &#8226;{" "}
-                  <span
-                    className="font-semibold text-[1.2rem] min-w-[10rem]"
-                    style={{ color: getColor2(analyticsData.attendence) }}
-                  >
-                    Attendance :
-                  </span>
-                  <span>{aigenerativeData.attendance}</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex gap-[1rem]">
-                  &#8226;{" "}
-                  <span
-                    className="font-semibold text-[1.2rem] min-w-[10rem]"
-                    style={{ color: getColor2(analyticsData.quiz) }}
-                  >
-                    Quiz :
-                  </span>
-                  <span>{aigenerativeData.quizzes}</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex gap-[1rem]">
-                  &#8226;{" "}
-                  <span
-                    className="font-semibold text-[1.2rem] min-w-[10rem]"
-                    style={{ color: getColor2(analyticsData.exam) }}
-                  >
-                    Exam :
-                  </span>
-                  <span>{aigenerativeData.exams}</span>
-                </div>
-              </li>
+            <ul className="flex flex-col gap-[1.2rem]">
+              {/* Grade Overview Message */}
+              {aigenerativeData.message && (
+                <li>
+                  <div className="flex gap-[1rem]">
+                    &#8226;
+                    <span
+                      className="font-semibold text-[1.2rem] min-w-[10rem]"
+                      style={{ color: getColor(analyticsData.grade) }}
+                    >
+                      Grade Overview :
+                    </span>
+                    <span>{aigenerativeData.message}</span>
+                  </div>
+                </li>
+              )}
+            
+              {/* Dynamic Sections */}
+              {Object.entries(aigenerativeData)
+                .filter(([key]) => key !== "message")
+                .map(([sectionKey, sectionValue]) => (
+                  <li key={sectionKey}>
+                    <div className="flex gap-[1rem]">
+                      &#8226;
+                      <span
+                        className="font-semibold text-[1.2rem] min-w-[10rem]"
+                        style={{
+                          color:
+                            sectionKey === "attendance"
+                              ? getColor2(analyticsData.attendence)
+                              : sectionKey === "assignments"
+                              ? getColor2(analyticsData.assignment)
+                              : sectionKey === "quizzes"
+                              ? getColor2(analyticsData.quiz)
+                              : getColor2(analyticsData.exam),
+                        }}
+                      >
+                        {sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1)} :
+                      </span>
+            
+                      <div className="flex flex-col gap-1">
+                        {Object.entries(sectionValue).map(([fieldKey, fieldValue]) => (
+                          <span key={fieldKey}>
+                            • {fieldValue}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                ))}
             </ul>
           </div>
         </>
